@@ -1,0 +1,88 @@
+﻿@model WebApiCoreFrontEnd.Models.ViewModels.TrailVM
+@{
+    ViewData["Title"] = "Upsert";
+    var title = Model.Trail.Id != 0 ? "Edit Trail" : "New Trail";
+    var saveupd = Model.Trail.Id != 0 ? "Update" : "Save";
+
+}
+<form method="post" asp-action="Upsert">
+    <div class="row border">
+        <div class="col-10 border-bottom p-2 m-2">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (Model.Trail.Id != 0)
+            {
+                <input type="hidden" asp-for="@Model.Trail.Id" />
+            }
+            <h2 class="text-info text-center">@title</h2>
+        </div>
+
+        <div class="col-8 p-2">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Trail.NationalParkId"></label>
+                </div>
+                <div class="col-8">
+                    @Html.DropDownListFor(m => Model.Trail.NationalParkId, Model.nationalParkList, "Select National Park", new { @class = "text-danger" })
+                    <span asp-validation-for="Trail.NationalParkId" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Trail.Name"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Trail.Name" class="form-control" />
+                    <span asp-validation-for="Trail.Name" class="text-danger"></span>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Trail.Difficulty"></label>
+                </div>
+                <div class="col-8">
+                    <select asp-for="Trail.Difficulty" asp-items="Html.GetEnumSelectList<WebApiCoreFrontEnd.Models.Trail.DifficultyType>()" class="form-control"></select>
+                    <span asp-validation-for="Trail.Difficulty" class="text-danger"></span>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Trail.Distance"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Trail.Distance" class="form-control" />
+                    <span asp-validation-for="Trail.Distance" class="text-danger"></span>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Trail.Elevation"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Trail.Elevation" class="form-control" />
+                    <span asp-validation-for="Trail.Elevation" class="text-danger"></span>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <div class="col-4 offset-4">
+                    <button type="submit" class="btn btn-success form-control">@saveupd</button>
+                </div>
+                <div class="col-4">
+                    <a asp-action="Index" class="btn btn-outline-info">Back To List</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</form>
+@section scripts
+    {
+    <partial name="_ValidationScriptsPartial" />
+}
